@@ -1,92 +1,105 @@
-import random
+from random import choice
 
+def jugar_ahorcado():
+    # Variables iniciales
+    palabras_y_pistas = {
+        "gato": ["Es un felino", "Dice miau", "Le gusta cazar ratones", "Tiene bigotes largos"],
+        "perro": ["Es el mejor amigo del hombre", "Dice guau", "Es muy leal", "Le gusta jugar con la pelota"],
+        "conejo": ["Le encanta la zanahoria", "Es un animal saltarín", "Tiene orejas largas", "Es muy suave y peludo"],
+    }
+    palabra_elegida, pistas = choice(list(palabras_y_pistas.items()))
+    letras_falladas = []
+    letras_acertadas = []
+    intentos_restantes = 6
+    aciertos = 0
+    juego_terminado = False
 
-def palabra_al_azar(lista):
+    # Función para pedir una letra válida
+    def pedir_letra():
+        letra_elegida = ""
+        es_valida = False
+        abecedario = "abcdefghijklmnñopqrstuvwxyz"
+
+        while not es_valida:
+            letra_elegida = input("Introduce una letra: ").lower()
+            if letra_elegida in abecedario and len(letra_elegida) == 1:
+                es_valida = True
+            else:
+                print("No has elegido una letra correcta")
+
+        return letra_elegida
+
+    # Función para mostrar el tablero
+    def mostrar_nuevo_tablero():
+        lista_oculta = []
+        for l in palabra_elegida:
+            if l in letras_acertadas:
+                lista_oculta.append(l)
+            else:
+                lista_oculta.append("-")
+        print(" ".join(lista_oculta))
+
+    # Función para verificar la letra elegida
+    def chequear_letra(letra_elegida, palabra_oculta, vidas, coincidencias):
+        fin = False
+
+        if letra_elegida in palabra_oculta and letra_elegida not in letras_acertadas:
+            letras_acertadas.append(letra_elegida)
+            coincidencias += palabra_oculta.count(letra_elegida)  # Suma todas las ocurrencias de la letra
+        elif letra_elegida not in palabra_oculta:
+            if letra_elegida not in letras_falladas:  # Evita duplicados en las letras falladas
+                letras_falladas.append(letra_elegida)
+                vidas -= 1  # Resta una vida solo en caso de fallo
+                print(f"Pista: {choice(pistas)}")  # Muestra una pista aleatoria
+
+        # Verifica condiciones de victoria o derrota
+        if vidas == 0:
+            fin = perder(palabra_oculta)
+        elif coincidencias == len(palabra_oculta):  # Todas las letras de la palabra descubiertas
+            fin = ganar(palabra_oculta)
+
+        return vidas, fin, coincidencias
+
+    # Función para mostrar el mensaje de derrota
+    def perder(palabra):
+        print("Te has quedado sin vidas")
+        print(f"La palabra oculta era {palabra}")
+        return True
+
+    # Función para mostrar el mensaje de victoria
+    def ganar(palabra_descubierta):
+        mostrar_nuevo_tablero()
+        print("¡¡¡Felicidades, has encontrado la palabra correcta!!!")
+        return True
+
+    # Inicio del juego
     print("Bienvenido al juego del AHORCADO.")
     print("Tienes 6 intentos para adivinar la palabra secreta.")
     print("¡Buena suerte!")
-    return random.choice(lista)
+
+    while not juego_terminado:
+        print('\n' + '*' * 20 + '\n')
+        mostrar_nuevo_tablero()
+        print('\n')
+        print('Letras incorrectas: ' + '-'.join(letras_falladas))
+        print(f'Vidas: {intentos_restantes}')
+        print(f'Te faltan {len(palabra_elegida) - aciertos} letras por descubrir.')
+        print('\n' + '*' * 20 + '\n')
+        letra = pedir_letra()
+        intentos_restantes, juego_terminado, aciertos = chequear_letra(
+            letra, palabra_elegida, intentos_restantes, aciertos
+        )
 
 
-def iniciar_juego(palabra):
-    # Convertimos la palabra oculta en una lista de caracteres (cada "_" es un lugar vacío)
-    palabra_oculta = list("_" * len(palabra))
-    intentos_restantes = 6
-    letras_falladas = set()
-    letras_acertadas = set()
+def iniciar_juego():
+    jugar_otra_vez = True
 
-    # Pistas según la palabra seleccionada
-    pistas = {
-        "gato": [
-            "Es un animal",
-            "Es un felino",
-            "Es buena mascota para un egipcio"
-        ],
-        "perro": [
-            "Es un animal",
-            "Tiene colmillos",
-            "Es amigo del hombre"
-        ],
-        "conejo": [
-            "Es un animal",
-            "Es vegetariano",
-            "Es doméstico"
-        ]
-    }
+    while jugar_otra_vez:
+        jugar_ahorcado()  # Llama a la función del juego
+        respuesta = input("¿Quieres jugar otra partida? (s/n): ").lower()
+        if respuesta != "s":
+            jugar_otra_vez = False
+            print("Gracias por jugar. ¡Hasta la próxima!")
 
-    pista_index = 0  # Para seguir el índice de las pistas a mostrar
-
-    while intentos_restantes > 0 and "_" in palabra_oculta:
-        # Mostrar la palabra oculta
-        print(f"\nPalabra: {''.join(palabra_oculta)}")  # Convertimos la lista de vuelta a string
-        print(f"Intentos restantes: {intentos_restantes}")
-        print(f"Letras falladas: {', '.join(letras_falladas)}")
-        print(f"Letras acertadas: {', '.join(letras_acertadas)}")
-
-        # Mostrar pistas cuando los intentos restantes son 3, 2 y 1
-        if intentos_restantes == 3 and pista_index < len(pistas[palabra]):
-            print(f"\nPista: {pistas[palabra][pista_index]}")
-            pista_index += 1
-        elif intentos_restantes == 2 and pista_index < len(pistas[palabra]):
-            print(f"\nPista: {pistas[palabra][pista_index]}")
-            pista_index += 1
-        elif intentos_restantes == 1 and pista_index < len(pistas[palabra]):
-            print(f"\nPista: {pistas[palabra][pista_index]}")
-            pista_index += 1
-
-        # Pedir al jugador que introduzca una letra
-        jugador = input("Introduce una letra: ").lower()
-
-        # Validaciones
-        if len(jugador) != 1 or not jugador.isalpha():
-            print("Por favor, introduce solo una letra.")
-            continue
-
-        if jugador in letras_falladas or jugador in letras_acertadas:
-            print("Ya intentaste esa letra. Prueba con otra.")
-            continue
-
-        if jugador in palabra:
-            letras_acertadas.add(jugador)
-            # Reemplazar los "_" por la letra acertada
-            for i, letra in enumerate(palabra):
-                if letra == jugador:
-                    palabra_oculta[i] = jugador  # Cambiar la letra en la lista
-            print(f"Correcto. La letra {jugador} está en la palabra.")
-        else:
-            intentos_restantes -= 1
-            letras_falladas.add(jugador)
-            print(f"Incorrecto. La letra {jugador} no está en la palabra.")
-
-    if "_" not in palabra_oculta:
-        print(f"\n¡Felicidades! Has adivinado la palabra: {''.join(palabra_oculta)}")
-    else:
-        print(f"\nSe te han acabado los intentos. La palabra era: {palabra}")
-
-
-# Lista de palabras para el juego
-lista_final = ["gato", "perro", "conejo"]
-palabra = palabra_al_azar(lista_final)
-
-# Iniciar el juego
-iniciar_juego(palabra)
+# Llama a la función principal
+iniciar_juego()
