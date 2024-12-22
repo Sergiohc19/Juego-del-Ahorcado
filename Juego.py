@@ -46,6 +46,10 @@ def jugar_ahorcado():
         if letra_elegida in palabra_oculta and letra_elegida not in letras_acertadas:
             letras_acertadas.append(letra_elegida)
             coincidencias += palabra_oculta.count(letra_elegida)  # Suma todas las ocurrencias de la letra
+        elif letra_elegida in palabra_oculta and letra_elegida in letras_acertadas:
+            print("Ya has encontrado esa letra. Intenta con otra diferente")
+
+
         elif letra_elegida not in palabra_oculta:
             if letra_elegida not in letras_falladas:  # Evita duplicados en las letras falladas
                 letras_falladas.append(letra_elegida)
