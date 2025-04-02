@@ -1,37 +1,29 @@
-Juego del Ahorcado en Backend (Python)
-🎮 Juego del Ahorcado en la terminal desarrollado con Python. Es un proyecto sencillo que permite a los usuarios jugar al tradicional juego del ahorcado directamente en la terminal, con una interfaz divertida usando emojis.
+# Juego del Ahorcado en Backend (Python)
 
-📜 Descripción
-Este proyecto fue creado para poner en práctica lógica de programación en backend usando Python. El juego selecciona una palabra al azar y el jugador tiene que adivinarla letra por letra. Si se quedan sin intentos, pierden; si adivinan todas las letras, ganan.
+🎮 **Juego del Ahorcado en la terminal** desarrollado con **Python**. Es un proyecto sencillo que permite a los usuarios jugar al tradicional juego del ahorcado directamente en la terminal, con una interfaz divertida usando emojis.
 
-⚙️ Características
-Palabras con pistas para ayudar al jugador
+## 📜 Descripción
 
-Control de intentos y letras ingresadas
+Este proyecto fue creado para poner en práctica lógica de programación en backend usando **Python**. El juego selecciona una palabra al azar y el jugador tiene que adivinarla letra por letra. Si se quedan sin intentos, pierden; si adivinan todas las letras, ganan.
 
-Interfaz visual con emojis para una mejor experiencia
+## ⚙️ Características
 
-Mensajes dinámicos para mayor interacción
+- Palabras con pistas para ayudar al jugador
+- Control de intentos y letras ingresadas
+- Interfaz visual con emojis para una mejor experiencia
+- Mensajes dinámicos para mayor interacción
+- Opción de jugar múltiples rondas
 
-Opción de jugar múltiples rondas
+## 🖥️ Requisitos
 
-🖥️ Requisitos
-Python 3.x (si no lo tienes instalado, puedes descargarlo desde python.org)
+- **Python 3.x** (si no lo tienes instalado, puedes descargarlo desde [python.org](https://www.python.org/downloads/))
 
-🚀 ¿Cómo ejecutar el juego?
-Clona este repositorio o descarga los archivos.
+## 🚀 ¿Cómo ejecutar el juego?
 
-Abre una terminal y navega al directorio donde descargaste el archivo.
+1. Clona este repositorio o descarga los archivos.
+2. Abre una terminal y navega al directorio donde descargaste el archivo.
+3. Ejecuta el archivo con el siguiente comando:
 
-Ejecuta el archivo con el siguiente comando:
+   ```bash
+   python Juego.py
 
-bash
-Copiar
-Editar
-python Juego.py
-¡Disfruta del juego!
-
-📂 Estructura del Proyecto
-Juego.py: El archivo principal con la lógica del juego.
-
-🌐 GitHub
