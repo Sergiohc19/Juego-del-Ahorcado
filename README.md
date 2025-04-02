@@ -20,7 +20,7 @@ Este proyecto fue creado para poner en práctica lógica de programación en bac
 
 ## 🚀 ¿Cómo ejecutar el juego?
 
-1. Clona este repositorio o descarga los archivos.
+1. Clona este repositorio https://github.com/Sergiohc19/Juego-del-Ahorcado.git o descarga los archivos. 
 2. Abre una terminal y navega al directorio donde descargaste el archivo.
 3. Ejecuta el archivo con el siguiente comando:
 
